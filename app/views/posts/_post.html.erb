@@ -1,0 +1,42 @@
+<div id="<%= dom_id post %>" class="post-container">
+    <p>
+
+        <%= post.title %>
+    </p>
+
+    <p>
+
+        <%= post.description %>
+    </p>
+
+    <p>
+
+        <%= post.keywords %>
+    </p>
+    <p>
+
+        <%= post.user.email %>
+    </p>
+    <% if user_signed_in? %>
+    <% like = current_user.likes.find_by(post: post) %>
+    <% if like.nil? %>
+    <%= button_to "Like", likes_path, params: { like: { post_id: post.id } }, method: :post, remote: true %>
+    <% else %>
+    <%= button_to "Unlike", like_path(like), method: :delete, remote: true %>
+    <% end %>
+    <p><%= post.likes.count %> Likes</p>
+
+
+    <% post.images.each do |image| %>
+    <%= image_tag(image, style:" object-fit: cover; width: 400px; height:200px;") %>
+    <% end %>
+    <%end %>
+    <p>
+
+        <%= link_to "View", post, class: "post-link", style: "z-index: 1;" %>
+
+
+
+
+    </p>
+</div>
